@@ -1,0 +1,27 @@
+{
+  "name": "clinicq-health-centre",
+  "version": "1.0.0",
+  "description": "ClinicQ Health Centre - Backend Development Fundamentals REST API with Express and SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test tests/*.test.js",
+    "test:soft-delete": "node tests/softDelete.test.js",
+    "test:api": "node tests/api.test.js"
+  },
+  "keywords": [
+    "express",
+    "sqlite",
+    "better-sqlite3",
+    "rest-api",
+    "backend",
+    "clinic-management"
+  ],
+  "author": "Sai Sudheer",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^13.2.0",
+    "express": "^5.3.0"
+  }
+}

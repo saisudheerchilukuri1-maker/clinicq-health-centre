@@ -1,0 +1,457 @@
+{
+  "info": {
+    "_postman_id": "c7a8b9e0-1234-4567-89ab-cdef01234567",
+    "name": "ClinicQ Health Centre API",
+    "description": "Comprehensive Postman collection for ClinicQ Health Centre REST API. Includes Doctors, Rooms (with Soft Delete & Restore demonstration), Bookings, SQL JOIN Details, Search filters, and Validation test suites.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Doctors",
+      "item": [
+        {
+          "name": "GET All Doctors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/doctors",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors"]
+            },
+            "description": "Fetch all registered doctors in the clinic."
+          }
+        },
+        {
+          "name": "GET Doctors by Specialization (Search)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/doctors?specialization=Cardiology",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors"],
+              "query": [
+                {
+                  "key": "specialization",
+                  "value": "Cardiology",
+                  "description": "Case-insensitive query search for doctor specialization"
+                }
+              ]
+            },
+            "description": "Search doctors by specialization."
+          }
+        },
+        {
+          "name": "GET Doctor by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/doctors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors", "1"]
+            },
+            "description": "Retrieve details of a single doctor by ID."
+          }
+        },
+        {
+          "name": "POST Add Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Aris Thorne\",\n  \"specialization\": \"Dermatology\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/doctors",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors"]
+            },
+            "description": "Create a new doctor record."
+          }
+        },
+        {
+          "name": "PUT Update Doctor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"specialization\": \"Clinical & Cosmetic Dermatology\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/doctors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors", "1"]
+            },
+            "description": "Update an existing doctor's name or specialization."
+          }
+        },
+        {
+          "name": "DELETE Doctor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/doctors/5",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors", "5"]
+            },
+            "description": "Delete a doctor without associated bookings."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Rooms & Soft Delete Demo",
+      "item": [
+        {
+          "name": "GET All Active Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms"]
+            },
+            "description": "Retrieve all active rooms (is_deleted = 0). Never returns deleted rooms."
+          }
+        },
+        {
+          "name": "GET Rooms by Floor (Search)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms?floor=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms"],
+              "query": [
+                {
+                  "key": "floor",
+                  "value": "2",
+                  "description": "Filter active rooms by floor number"
+                }
+              ]
+            },
+            "description": "Search active rooms located on a specific floor."
+          }
+        },
+        {
+          "name": "GET Room by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "1"]
+            },
+            "description": "Retrieve an active room by ID."
+          }
+        },
+        {
+          "name": "POST Add Room",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Surgical Prep Suite 401\",\n  \"floor\": 4\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms"]
+            },
+            "description": "Create a new room."
+          }
+        },
+        {
+          "name": "PUT Update Room",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Advanced Surgical Suite 401\",\n  \"floor\": 4\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/rooms/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "1"]
+            },
+            "description": "Update an existing active room."
+          }
+        },
+        {
+          "name": "TEST 1: DELETE Soft Delete Room 3",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "3"]
+            },
+            "description": "TEST 1: Soft delete room 3. Sets is_deleted from 0 to 1 and returns 200 OK."
+          }
+        },
+        {
+          "name": "TEST 2: GET Check Soft Deleted Room 3 (Expect 404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "3"]
+            },
+            "description": "TEST 2: Attempt to retrieve soft-deleted room 3. Returns 404 Not Found."
+          }
+        },
+        {
+          "name": "TEST 3: POST Restore Room 3",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms/3/restore",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "3", "restore"]
+            },
+            "description": "TEST 3: Restore soft-deleted room 3. Sets is_deleted from 1 to 0 and returns 200 OK."
+          }
+        },
+        {
+          "name": "TEST 4: GET Check Restored Room 3 (Expect 200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["rooms", "3"]
+            },
+            "description": "TEST 4: Retrieve restored room 3. Returns 200 OK."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Bookings & JOIN Details",
+      "item": [
+        {
+          "name": "GET All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            },
+            "description": "Fetch all scheduled bookings."
+          }
+        },
+        {
+          "name": "GET Bookings Details (SQL JOIN)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/details",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "details"]
+            },
+            "description": "SQL JOIN combining Bookings, Doctors, and Rooms. Returns Booking ID, date, time, Doctor name & specialization, and Room name & floor."
+          }
+        },
+        {
+          "name": "GET Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "1"]
+            },
+            "description": "Retrieve booking by ID."
+          }
+        },
+        {
+          "name": "POST Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctor_id\": 2,\n  \"room_id\": 1,\n  \"booking_date\": \"2026-12-15\",\n  \"booking_time\": \"11:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            },
+            "description": "Create a new booking after validating doctor, room, date/time format, and absence of conflicts."
+          }
+        },
+        {
+          "name": "POST Create Booking Conflict (Expect 409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctor_id\": 1,\n  \"room_id\": 1,\n  \"booking_date\": \"2026-11-20\",\n  \"booking_time\": \"09:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            },
+            "description": "Attempt to book a slot that is already reserved. Returns 409 Conflict."
+          }
+        },
+        {
+          "name": "PUT Update Booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"booking_time\": \"10:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "1"]
+            },
+            "description": "Update booking time or assignment."
+          }
+        },
+        {
+          "name": "DELETE Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "4"]
+            },
+            "description": "Cancel/delete a booking."
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Validation & Error Handling",
+      "item": [
+        {
+          "name": "Validation - Missing Fields (Expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/doctors",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors"]
+            },
+            "description": "Validation error when required fields are missing or empty."
+          }
+        },
+        {
+          "name": "Validation - Bad Date Format (Expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctor_id\": 1,\n  \"room_id\": 1,\n  \"booking_date\": \"2026-02-31\",\n  \"booking_time\": \"09:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            },
+            "description": "Validation error when date is invalid (e.g., Feb 31)."
+          }
+        },
+        {
+          "name": "Resource Not Found (Expect 404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/doctors/99999",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors", "99999"]
+            },
+            "description": "Returns 404 when requested resource does not exist."
+          }
+        }
+      ]
+    }
+  ]
+}
