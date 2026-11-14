@@ -1,0 +1,276 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "ClinicQ Health Centre",
+  "collectionId": "clinicq-tc-col-1",
+  "dateExported": "2026-11-14",
+  "version": "1.1",
+  "folders": [
+    {
+      "_id": "f_doctors",
+      "name": "1. Doctors",
+      "containerId": "",
+      "created": "2026-11-14",
+      "sortNum": 10000
+    },
+    {
+      "_id": "f_rooms",
+      "name": "2. Rooms & Soft Delete Demo",
+      "containerId": "",
+      "created": "2026-11-14",
+      "sortNum": 20000
+    },
+    {
+      "_id": "f_bookings",
+      "name": "3. Bookings & JOIN Details",
+      "containerId": "",
+      "created": "2026-11-14",
+      "sortNum": 30000
+    },
+    {
+      "_id": "f_validation",
+      "name": "4. Validation & Error Handling",
+      "containerId": "",
+      "created": "2026-11-14",
+      "sortNum": 40000
+    }
+  ],
+  "requests": [
+    {
+      "_id": "tc_doc_1",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "GET All Doctors",
+      "url": "http://localhost:3000/doctors",
+      "method": "GET",
+      "sortNum": 10000
+    },
+    {
+      "_id": "tc_doc_2",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "GET Doctors by Specialization",
+      "url": "http://localhost:3000/doctors?specialization=Cardiology",
+      "method": "GET",
+      "sortNum": 20000
+    },
+    {
+      "_id": "tc_doc_3",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "GET Doctor by ID",
+      "url": "http://localhost:3000/doctors/1",
+      "method": "GET",
+      "sortNum": 30000
+    },
+    {
+      "_id": "tc_doc_4",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "POST Add Doctor",
+      "url": "http://localhost:3000/doctors",
+      "method": "POST",
+      "sortNum": 40000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Dr. Aris Thorne\",\n  \"specialization\": \"Dermatology\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_doc_5",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "PUT Update Doctor",
+      "url": "http://localhost:3000/doctors/1",
+      "method": "PUT",
+      "sortNum": 50000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"specialization\": \"Clinical & Cosmetic Dermatology\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_doc_6",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_doctors",
+      "name": "DELETE Doctor",
+      "url": "http://localhost:3000/doctors/5",
+      "method": "DELETE",
+      "sortNum": 60000
+    },
+    {
+      "_id": "tc_room_1",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "GET All Active Rooms",
+      "url": "http://localhost:3000/rooms",
+      "method": "GET",
+      "sortNum": 10000
+    },
+    {
+      "_id": "tc_room_2",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "GET Rooms by Floor (floor=2)",
+      "url": "http://localhost:3000/rooms?floor=2",
+      "method": "GET",
+      "sortNum": 20000
+    },
+    {
+      "_id": "tc_room_3",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "GET Room by ID",
+      "url": "http://localhost:3000/rooms/1",
+      "method": "GET",
+      "sortNum": 30000
+    },
+    {
+      "_id": "tc_room_4",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "POST Add Room",
+      "url": "http://localhost:3000/rooms",
+      "method": "POST",
+      "sortNum": 40000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Surgical Prep Suite 401\",\n  \"floor\": 4\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_room_test1",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "TEST 1: DELETE Soft Delete Room 3 (Expect 200)",
+      "url": "http://localhost:3000/rooms/3",
+      "method": "DELETE",
+      "sortNum": 50000
+    },
+    {
+      "_id": "tc_room_test2",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "TEST 2: GET Room 3 Soft Deleted (Expect 404)",
+      "url": "http://localhost:3000/rooms/3",
+      "method": "GET",
+      "sortNum": 60000
+    },
+    {
+      "_id": "tc_room_test3",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "TEST 3: POST Restore Room 3 (Expect 200)",
+      "url": "http://localhost:3000/rooms/3/restore",
+      "method": "POST",
+      "sortNum": 70000
+    },
+    {
+      "_id": "tc_room_test4",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_rooms",
+      "name": "TEST 4: GET Room 3 Restored (Expect 200)",
+      "url": "http://localhost:3000/rooms/3",
+      "method": "GET",
+      "sortNum": 80000
+    },
+    {
+      "_id": "tc_book_1",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_bookings",
+      "name": "GET All Bookings",
+      "url": "http://localhost:3000/bookings",
+      "method": "GET",
+      "sortNum": 10000
+    },
+    {
+      "_id": "tc_book_2",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_bookings",
+      "name": "GET Bookings Details (SQL JOIN)",
+      "url": "http://localhost:3000/bookings/details",
+      "method": "GET",
+      "sortNum": 20000
+    },
+    {
+      "_id": "tc_book_3",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_bookings",
+      "name": "GET Booking by ID",
+      "url": "http://localhost:3000/bookings/1",
+      "method": "GET",
+      "sortNum": 30000
+    },
+    {
+      "_id": "tc_book_4",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_bookings",
+      "name": "POST Create Booking",
+      "url": "http://localhost:3000/bookings",
+      "method": "POST",
+      "sortNum": 40000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"doctor_id\": 2,\n  \"room_id\": 1,\n  \"booking_date\": \"2026-12-15\",\n  \"booking_time\": \"11:00\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_book_5",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_bookings",
+      "name": "POST Booking Conflict (Expect 409)",
+      "url": "http://localhost:3000/bookings",
+      "method": "POST",
+      "sortNum": 50000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"doctor_id\": 1,\n  \"room_id\": 1,\n  \"booking_date\": \"2026-11-20\",\n  \"booking_time\": \"09:00\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_valid_1",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_validation",
+      "name": "Validation - Missing Fields (Expect 400)",
+      "url": "http://localhost:3000/doctors",
+      "method": "POST",
+      "sortNum": 10000,
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "tc_valid_2",
+      "colId": "clinicq-tc-col-1",
+      "containerId": "f_validation",
+      "name": "Resource Not Found (Expect 404)",
+      "url": "http://localhost:3000/doctors/9999",
+      "method": "GET",
+      "sortNum": 20000
+    }
+  ]
+}
